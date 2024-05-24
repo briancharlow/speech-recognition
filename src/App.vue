@@ -1,22 +1,40 @@
 <script setup>
+import {ref, onMounted} from 'vue';
+
+const transcript = ref('')
+const isRecording= ref(false);
+
+const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const sr = new Recognition();
+
+onMounted(()=>{
+  sr.continuous = true;
+  sr.interimResults= true;
+
+  sr.onstart = ()=>{
+    console.log('SR has started')
+    isRecording.value=true;
+
+  }
+})
 
 </script>
 
 <template>
   <div>
-      <h1>Hello World</h1>
-      <p> this is the default page for vue</p>
+      <button class="`mic`">Recording</button>
+      <div class="transcript"></div>
  </div>
 </template>
 
-<style scoped>
+<style>
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 body{
-  background-color: rgb(55, 44, 57);
+  background: rgb(55, 44, 57);
   color: #fff;
 }
 </style>
