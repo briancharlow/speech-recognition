@@ -13,16 +13,30 @@ onMounted(()=>{
 
   sr.onstart = ()=>{
     console.log('SR has started')
-    isRecording.value=true;
+    isRecording.value = true;
 
   }
+  sr.onend = () => {
+    console.log("SR has stopped")
+    isRecording.value= false;
+  }
+  sr.onresult = (evt) =>{
+    console.log(evt)
+  }
 })
+const ToggleMic = () =>{
+  if(isRecording.value){
+    sr.stop()
+  } else{
+    sr.start()
+  }
+}
 
 </script>
 
 <template>
   <div>
-      <button class="`mic`">Recording</button>
+      <button :class="`mic`" @click="ToggleMic" >Recording</button>
       <div class="transcript"></div>
  </div>
 </template>
